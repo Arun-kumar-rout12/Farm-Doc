@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="static/images/software-application.png" type="image/png">
+    <title>Farm Doc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            background: var(--background);
+            color: var(--text-color);
+            transition: all 0.3s ease-in-out;
+        }
+
+        :root {
+            --background: #F3F4F6;
+            --text-color: #333;
+            --sidebar-bg: #1F2937;
+            --sidebar-text: #E5E7EB;
+            --input-bg: #FFFFFF;
+            --button-bg: #2563EB;
+            --button-text: #FFFFFF;
+            --user-message: #2563EB;
+            --bot-message: #E5E7EB;
+        }
+
+        :root.dark {
+            --background: #1E293B;
+            --text-color: #E5E7EB;
+            --sidebar-bg: #111827;
+            --sidebar-text: #9CA3AF;
+            --input-bg: #374151;
+            --button-bg: #3B82F6;
+            --button-text: #E5E7EB;
+            --user-message: #3B82F6;
+            --bot-message: #4B5563;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .sidebar h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .sidebar button {
+            margin-top: auto;
+            background: none;
+            border: 1px solid var(--sidebar-text);
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: var(--sidebar-text);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .sidebar button:hover {
+            background: var(--sidebar-text);
+            color: var(--sidebar-bg);
+        }
+
+        .chat {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--background);
+        }
+
+        #header {
+            padding: 15px 20px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            background: var(--button-bg);
+            color: var(--button-text);
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 1rem;
+            line-height: 1.5;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .user {
+            align-self: flex-end;
+            background: var(--user-message);
+            color: #FFF;
+            border-bottom-right-radius: 0;
+        }
+
+        .bot {
+            align-self: flex-start;
+            background: var(--bot-message);
+            color: var(--text-color);
+            border-bottom-left-radius: 0;
+        }
+
+        #footer {
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            background: var(--input-bg);
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            background: var(--input-bg);
+            color: var(--text-color);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+
+        #footer button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            background: var(--button-bg);
+            color: var(--button-text);
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        #footer button:hover {
+            background: #1D4ED8;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .typing-indicator.active {
+            opacity: 1;
+        }
+
+        .typing-indicator div {
+            width: 8px;
+            height: 8px;
+            background: var(--bot-message);
+            border-radius: 50%;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        .typing-indicator div:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator div:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Farm Doc</h1>
+            <button onclick="toggleTheme()">Toggle Theme</button>
+        </div>
+        <div class="chat">
+            <div id="header">Farm Doc</div>
+            <div id="messages">
+                <div class="typing-indicator" id="typingIndicator">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div id="footer">
+                <input type="text" id="userInput" placeholder="Type your message here..." onkeydown="checkEnter(event)">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isDarkMode = false;
+
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark', isDarkMode);
+        }
+
+        async function sendMessage() {
+            const inputField = document.getElementById("userInput");
+            const message = inputField.value;
+            if (!message) return;
+
+            addMessage(message, "user");
+            inputField.value = "";
+
+            const typingIndicator = document.getElementById("typingIndicator");
+            typingIndicator.classList.add("active");
+
+            const response = await fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message }),
+            });
+
+            const data = await response.json();
+            typingIndicator.classList.remove("active");
+
+            typeMessage(data.response, "bot");
+        }
+
+        function addMessage(message, sender) {
+            const messagesDiv = document.getElementById("messages");
+            const messageDiv = document.createElement("div");
+            messageDiv.className = "message " + sender;
+            messageDiv.textContent = message;
+
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function typeMessage(text, sender) {
+            const messagesDiv = document.getElementById("messages");
+            const messageDiv = document.createElement("div");
+            messageDiv.className = "message " + sender;
+            messagesDiv.appendChild(messageDiv);
+
+            let index = 0;
+
+            const typingInterval = setInterval(() => {
+                if (index < text.length) {
+                    messageDiv.textContent += text.charAt(index);
+                    index++;
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                } else {
+                    clearInterval(typingInterval);
+                }
+            }, 50);
+        }
+
+        function checkEnter(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>

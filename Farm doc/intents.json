@@ -1,0 +1,117 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": ["Hi", "Hello", "How are you?", "Is anyone there?"],
+      "responses": ["Hello!", "Hi, I am Farm Doc.", "Greetings! How can Doctor help?"]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": ["Bye", "See you later", "Goodbye"],
+      "responses": ["Goodbye!", "Take care!", "See you soon!"]
+    },
+    {
+      "tag": "thanks",
+      "patterns": ["Thanks", "Thank you", "That's helpful"],
+      "responses": ["You're welcome!", "Happy to help!"]
+    },
+    {
+      "tag": "problem_initial",
+      "patterns": [
+        "I have a problem",
+        "Something is wrong with my farm",
+        "There is an issue with my crops or livestock",
+        "Help me with my farm issue"
+      ],
+      "responses": [
+        "Can you specify the issue? Is it related to crops or livestock?",
+        "Is the problem with your crops or livestock? Let me know to assist further."
+      ],
+      "followup": ["problem_crop", "problem_livestock"]
+    },
+    {
+      "tag": "problem_crop",
+      "patterns": [
+        "It is a problem with crops",
+        "My plants are affected",
+        "The issue is with my crops"
+      ],
+      "responses": [
+        "Can you describe the symptoms? For example, are there discolorations, spots, or stunted growth?",
+        "What signs have you observed in the crops? Are there any unusual patterns or damages?"
+      ],
+      "followup": ["crop_symptoms"]
+    },
+    {
+      "tag": "problem_livestock",
+      "patterns": [
+        "It is a problem with livestock",
+        "My animals are sick",
+        "The issue is with my livestock"
+      ],
+      "responses": [
+        "What symptoms have you noticed in the livestock? For example, loss of appetite, abnormal behavior, or physical changes?",
+        "Can you provide more details about the condition of your livestock? Are there visible wounds or other signs?"
+      ],
+      "followup": ["livestock_symptoms"]
+    },
+    {
+      "tag": "crop_symptoms",
+      "patterns": [
+        "There are spots on leaves",
+        "My plants are turning yellow",
+        "The growth is stunted",
+        "There are holes in the leaves"
+      ],
+      "responses": [
+        "It seems like [insert probable crop disease based on symptoms]. Have you noticed pest activity or fungal growth?",
+        "These symptoms might indicate [insert probable cause]. Can you provide an image for further analysis?",
+        "Ensure proper drainage and check for pests or infections. Upload a photo for detailed recommendations."
+      ],
+      "followup": ["advanced_crop_analysis"]
+    },
+    {
+      "tag": "livestock_symptoms",
+      "patterns": [
+        "The animals are not eating",
+        "There are visible wounds",
+        "The livestock has abnormal behavior",
+        "I see unusual changes in my animals"
+      ],
+      "responses": [
+        "This could indicate [insert probable livestock condition]. Are there other symptoms, like fever or lethargy?",
+        "It might be [insert condition]. Ensure the affected animals are separated and upload an image for a detailed diagnosis.",
+        "These signs suggest [insert cause]. Monitor the animal closely and provide clean water and food."
+      ],
+      "followup": ["advanced_livestock_analysis"]
+    },
+    {
+      "tag": "advanced_crop_analysis",
+      "patterns": [
+        "Analyze crop issue further",
+        "Provide remedies for crops",
+        "What can I do for my crops?",
+        "Tell me the treatment for this"
+      ],
+      "responses": [
+        "Analyzing data... The condition could be [insert disease]. Apply [insert remedy], and ensure adequate ventilation and sunlight.",
+        "Based on the symptoms, consider using [specific treatment] and removing infected parts of the plants.",
+        "This might require [specific remedy]. For persistent issues, try crop rotation or certified disease-resistant seeds."
+      ]
+    },
+    {
+      "tag": "advanced_livestock_analysis",
+      "patterns": [
+        "Analyze livestock issue further",
+        "Provide remedies for livestock",
+        "What can I do for my animals?",
+        "Tell me the treatment for this"
+      ],
+      "responses": [
+        "Analyzing symptoms... The condition might be [insert disease]. Ensure proper hydration and administer [specific treatment].",
+        "For these symptoms, isolate the affected animals and consider [specific remedy]. Consult a veterinarian for further guidance.",
+        "It seems like [insert condition]. Provide clean water, high-quality feed, and monitor the animal's behavior closely."
+      ]
+    }
+  ]
+}
