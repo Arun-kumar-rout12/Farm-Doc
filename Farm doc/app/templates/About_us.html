@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Crop Disease Diagnosis Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        header {
+            background-color: #283747;
+            color: white;
+            text-align: center;
+            padding: 2em 0;
+            display: flex; /* Added flexbox to align elements */
+            justify-content: space-between; /* Space items evenly */
+            align-items: center; /* Align items vertically */
+        }
+
+        .header-content {
+          flex-grow:1; /* Allow the header content to take up available space*/
+        }
+
+        .header-content h1 {
+          margin-bottom: 5px; /* Add some space below the h1 */
+        }
+
+        .home-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #283747;
+            border-bottom: 2px solid #283747;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .team-member {
+            display: inline-block;
+            text-align: center;
+            margin: 25px;
+            width: 200px;
+        }
+
+        .team-member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            background-color: #e9ecef;
+            text-align: center;
+            padding: 1.5em 0;
+            border-top: 1px solid #dee2e6;
+            color: #6c757d;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .cta-button{
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="home-button">Home</a>
+        <div class="header-content">
+          <h1>About Us</h1>
+          <p>Revolutionizing Crop Health with AI-Driven Diagnostics</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="section">
+            <h2>Introduction & Mission Statement</h2>
+            <p>
+                Welcome to CropCare AI, an AI-powered farmer disease diagnostic and reporting portal. Our mission is to empower farmers with accurate and timely disease detection to ensure healthier crops and higher yields.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2>The Problem Statement</h2>
+            <p>
+                Farmers often struggle with identifying crop diseases early, leading to significant yield loss. Traditional methods are time-consuming and often lack accuracy. Our AI-driven solution bridges this gap by providing instant disease diagnosis and expert recommendations.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2>How It Works</h2>
+            <ul>
+                <li>AI-based image detection for crop diseases</li>
+                <li>Real-time diagnosis and reporting</li>
+                <li>Expert recommendations and treatments</li>
+                <li>Community and government support links</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Technology Behind the Platform</h2>
+            <p>
+                Our platform leverages AI-powered image recognition and a vast agricultural disease database to provide accurate and instant diagnoses. With a user-friendly interface, farmers can easily upload images of affected crops and receive expert-backed solutions. We utilize Flask for our backend and advanced machine learning models for diagnosis.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2>Impact & Benefits for Farmers</h2>
+            <ul>
+                <li>Early disease detection</li>
+                <li>Cost-effective solutions</li>
+                <li>Increased yield and profitability</li>
+                <li>Government and expert consultation support</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Contact & Support</h2>
+            <p>Have questions or need support? Contact us at <a href="mailto:support@cropcareai.com">support@cropcareai.com</a>. Join our mission to revolutionize farming with technology!</p>
+        </section>
+
+        <section class="section">
+            <h2>Call to Action</h2>
+            <p><a href="/your-diagnosis-page" class="cta-button">Start diagnosing your crops today! Upload an image and get an instant report.</a></p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CropCare AI. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

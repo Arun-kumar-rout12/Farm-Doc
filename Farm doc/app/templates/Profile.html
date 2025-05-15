@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="static/images/user (1).png" type="image/png">
+    <title>Farmer Profile Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #60ad5e;
+            --primary-dark: #005005;
+            --secondary: #ff9800;
+            --accent: #4caf50;
+            --background: #f5f7fa;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --text-light: #666666;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa, #e4e8eb);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .navbar {
+            background: linear-gradient(140deg, var(--primary-dark), var(--primary));
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+        
+        .navbar-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .navbar .logo i {
+            font-size: 1.8rem;
+        }
+        
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 8px 16px;
+            font-weight: 500;
+            border-radius: 4px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .navbar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            margin-top: 80px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 100px auto 40px;
+            flex-grow: 1;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+        
+        .profile-header img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-light);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-info h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+        }
+        
+        .profile-info p {
+            margin: 5px 0 0;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+        
+        .profile-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .stat-item {
+            background: rgba(46, 125, 50, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .stat-item i {
+            font-size: 0.9rem;
+        }
+        
+        .tabs-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .tabs {
+            display: flex;
+            background: linear-gradient(to right, var(--primary-light), var(--primary));
+            padding: 0 20px;
+        }
+        
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            color: white;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tab:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .tab.active {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: white;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 30px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card h3 {
+            margin-top: 0;
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card h3 i {
+            color: var(--primary);
+        }
+        
+        .card p {
+            margin: 10px 0 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .form-container h3 {
+            margin-top: 0;
+            color: var(--primary-dark);
+        }
+        
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .input-group label {
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+        
+        .input-group input {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+        }
+        
+        button[type="submit"] {
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .tech-ideas {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .tech-ideas h3 {
+            margin-top: 0;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .tech-card {
+            background: rgba(46, 125, 50, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .tech-card:hover {
+            transform: translateY(-5px);
+            background: rgba(46, 125, 50, 0.1);
+        }
+        
+        .tech-card h4 {
+            margin: 0 0 10px;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tech-card p {
+            margin: 0;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .benchmarks {
+            margin-top: 30px;
+        }
+        
+        .benchmark-category {
+            margin-bottom: 20px;
+        }
+        
+        .benchmark-category h4 {
+            margin: 0 0 10px;
+            color: var(--primary-dark);
+        }
+        
+        .benchmark-category ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .benchmark-category li {
+            margin-bottom: 5px;
+        }
+        
+        .footer {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        .footer-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-social a {
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-stats {
+                justify-content: center;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+            }
+            
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Loading animation */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(46, 125, 50, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>FarmDoc Profile</span>
+            </div>
+            <a href="/">
+                <i class="fas fa-home"></i>
+                <span>Back to Home</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="profile-header">
+            <img src="static/images/user.png" alt="Farmer Profile">
+            <div class="profile-info">
+                <h2>{{ farmer.name }}</h2>
+                <p><i class="fas fa-tractor"></i> {{ farmer.farming_method }} Farmer</p>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>{{ farmer.address }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-award"></i>
+                        <span>{{ farmer.farming_experience }} years experience</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs-container">
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab(event, 'profile')">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </div>
+                <div class="tab" onclick="switchTab(event, 'farm-details')">
+                    <i class="fas fa-tractor"></i>
+                    <span>Farm Details</span>
+                </div>
+                <div class="tab" onclick="switchTab(event, 'analytics')">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </div>
+                <div class="tab" onclick="switchTab(event, 'recommendations')">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Smart Tips</span>
+                </div>
+            </div>
+
+            <div id="profile" class="tab-content active">
+                <div class="cards">
+                    <div class="card">
+                        <h3><i class="fas fa-id-card"></i> Personal Information</h3>
+                        <p><strong>Name:</strong> {{ farmer.name }}</p>
+                        <p><strong>Contact:</strong> {{ farmer.phone }}</p>
+                        <p><strong>Email:</strong> {{ farmer.email }}</p>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-map-marked-alt"></i> Location</h3>
+                        <p>{{ farmer.address }}</p>
+                        <div id="mini-map" style="height: 120px; margin-top: 10px; border-radius: 6px; overflow: hidden;"></div>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-history"></i> Farming History</h3>
+                        <p><strong>Experience:</strong> {{ farmer.farming_experience }} years</p>
+                        <p><strong>Specialization:</strong> {{ farmer.specialization }}</p>
+                        <p><strong>Certifications:</strong> {{ farmer.certifications }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="farm-details" class="tab-content">
+                <div class="cards">
+                    <div class="card">
+                        <h3><i class="fas fa-ruler-combined"></i> Farm Size</h3>
+                        <p>{{ farmer.farm_size }} acres</p>
+                        <div id="farm-size-chart" style="height: 120px; margin-top: 10px;"></div>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-seedling"></i> Farming Method</h3>
+                        <p>{{ farmer.farming_method }}</p>
+                        <div id="method-chart" style="height: 120px; margin-top: 10px;"></div>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-crop-alt"></i> Main Crops</h3>
+                        <p>{{ farmer.main_crops }}</p>
+                        <div id="crops-chart" style="height: 120px; margin-top: 10px;"></div>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-tint"></i> Irrigation System</h3>
+                        <p>{{ farmer.irrigation_system }}</p>
+                        <div id="irrigation-chart" style="height: 120px; margin-top: 10px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="analytics" class="tab-content">
+                <div class="form-container">
+                    <h3><i class="fas fa-chart-bar"></i> Enter Productivity Data</h3>
+                    <form id="productivityForm">
+                        <div class="input-grid">
+                            <div class="input-group">
+                                <label for="jan">January</label>
+                                <input type="number" id="jan" name="jan" placeholder="Enter yield" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="feb">February</label>
+                                <input type="number" id="feb" name="feb" placeholder="Enter yield" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="mar">March</label>
+                                <input type="number" id="mar" name="mar" placeholder="Enter yield" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="apr">April</label>
+                                <input type="number" id="apr" name="apr" placeholder="Enter yield" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="may">May</label>
+                                <input type="number" id="may" name="may" placeholder="Enter yield" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="jun">June</label>
+                                <input type="number" id="jun" name="jun" placeholder="Enter yield" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="jul">July</label>
+                                <input type="number" id="jul" name="jul" placeholder="Enter yield" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="aug">August</label>
+                                <input type="number" id="aug" name="aug" placeholder="Enter yield" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="sep">September</label>
+                                <input type="number" id="sep" name="sep" placeholder="Enter yield" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="oct">October</label>
+                                <input type="number" id="oct" name="oct" placeholder="Enter yield" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="nov">November</label>
+                                <input type="number" id="nov" name="nov" placeholder="Enter yield" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="dec">December</label>
+                                <input type="number" id="dec" name="dec" placeholder="Enter yield" required>
+                            </div>
+                        </div>
+                        <button type="submit">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Generate Analytics</span>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="chart-container">
+                    <h3><i class="fas fa-chart-line"></i> Productivity Analysis</h3>
+                    <div id="productivityChart" style="height: 400px;"></div>
+                </div>
+
+                <div class="tech-ideas">
+                    <h3><i class="fas fa-lightbulb"></i> Smart Farming Recommendations</h3>
+                    <div class="tech-grid">
+                        <div class="tech-card">
+                            <h4><i class="fas fa-satellite-dish"></i> Precision Agriculture</h4>
+                            <p>Implement GPS and IoT-based monitoring for optimal crop yields and resource management.</p>
+                        </div>
+                        <div class="tech-card">
+                            <h4><i class="fas fa-water"></i> Smart Irrigation</h4>
+                            <p>Automated water management systems to improve efficiency and reduce water waste.</p>
+                        </div>
+                        <div class="tech-card">
+                            <h4><i class="fas fa-drone"></i> Drone Technology</h4>
+                            <p>Use drones for crop surveillance, pest control, and field analysis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="recommendations" class="tab-content">
+                <div class="tech-ideas">
+                    <h3><i class="fas fa-magic"></i> Personalized Farming Recommendations</h3>
+                    <div class="tech-grid">
+                        <div class="tech-card">
+                            <h4><i class="fas fa-robot"></i> Automation Solutions</h4>
+                            <p>Based on your farm size, we recommend automated planting and harvesting equipment.</p>
+                        </div>
+                        <div class="tech-card">
+                            <h4><i class="fas fa-seedling"></i> Crop Rotation Plan</h4>
+                            <p>Optimal rotation schedule for your main crops to maintain soil health.</p>
+                        </div>
+                        <div class="tech-card">
+                            <h4><i class="fas fa-cloud-sun-rain"></i> Weather Adaptation</h4>
+                            <p>Strategies to protect your crops based on local climate patterns.</p>
+                        </div>
+                        <div class="tech-card">
+                            <h4><i class="fas fa-dollar-sign"></i> Market Trends</h4>
+                            <p>Current market prices and demand for your primary crops.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="benchmarks">
+                    <h3><i class="fas fa-trophy"></i> Productivity Benchmarks</h3>
+                    <div class="benchmark-category">
+                        <h4><i class="fas fa-wheat"></i> Crop Farming</h4>
+                        <ul>
+                            <li><strong>Grains:</strong> Wheat (3–6 tons/hectare), Rice (4–8 tons/hectare)</li>
+                            <li><strong>Vegetables:</strong> 80-90% of potential yield under optimal conditions</li>
+                            <li><strong>Fruits:</strong> 70-80% of full yield potential</li>
+                        </ul>
+                    </div>
+                    <div class="benchmark-category">
+                        <h4><i class="fas fa-cow"></i> Livestock Farming</h4>
+                        <ul>
+                            <li><strong>Dairy:</strong> High-yield cows (20-30 liters/day)</li>
+                            <li><strong>Poultry:</strong> 250-300 eggs/year per hen</li>
+                            <li><strong>Meat:</strong> 80-90% of breed potential</li>
+                        </ul>
+                    </div>
+                    <div class="benchmark-category">
+                        <h4><i class="fas fa-chart-pie"></i> Efficiency Metrics</h4>
+                        <ul>
+                            <li><strong>Labor:</strong> 1-2 hectares/worker (traditional), 10+ hectares (mechanized)</li>
+                            <li><strong>Resources:</strong> 70-80% utilization efficiency</li>
+                            <li><strong>Profitability:</strong> Net margin of 20-40%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Services</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2025 FarmDoc Pro. All rights reserved.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize with default location
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize mini charts
+            initMiniCharts();
+            
+            // Initialize map (placeholder - would use Google Maps or similar API)
+            initMiniMap();
+            
+            // Attach form listener
+            attachProductivityFormListener();
+        });
+
+        function switchTab(event, tabId) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            if (tabId === 'analytics') {
+                const analyticsTab = document.getElementById('analytics');
+                analyticsTab.innerHTML = `
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                `;
+                analyticsTab.classList.add('active');
+                setTimeout(() => {
+                    showAnalyticsContent();
+                }, 1500);
+            } else {
+                document.getElementById(tabId).classList.add('active');
+            }
+        }
+
+        function initMiniCharts() {
+            // Farm size chart
+            new ApexCharts(document.querySelector("#farm-size-chart"), {
+                series: [parseFloat('{{ farmer.farm_size }}')],
+                chart: { type: 'radialBar', height: 120, sparkline: { enabled: true } },
+                plotOptions: { radialBar: { hollow: { size: '60%' } } },
+                labels: ['Acres'],
+                colors: ['#2e7d32']
+            }).render();
+
+            // Method chart
+            new ApexCharts(document.querySelector("#method-chart"), {
+                series: [75],
+                chart: { type: 'radialBar', height: 120, sparkline: { enabled: true } },
+                plotOptions: { radialBar: { hollow: { size: '60%' } } },
+                labels: ['Efficiency'],
+                colors: ['#4caf50']
+            }).render();
+
+            // Crops chart
+            new ApexCharts(document.querySelector("#crops-chart"), {
+                series: [3],
+                chart: { type: 'radialBar', height: 120, sparkline: { enabled: true } },
+                plotOptions: { radialBar: { hollow: { size: '60%' } } },
+                labels: ['Main Crops'],
+                colors: ['#8bc34a']
+            }).render();
+
+            // Irrigation chart
+            new ApexCharts(document.querySelector("#irrigation-chart"), {
+                series: [85],
+                chart: { type: 'radialBar', height: 120, sparkline: { enabled: true } },
+                plotOptions: { radialBar: { hollow: { size: '60%' } } },
+                labels: ['Coverage'],
+                colors: ['#00bcd4']
+            }).render();
+        }
+
+        function initMiniMap() {
+            // In a real implementation, this would initialize a Google Map or similar
+            document.getElementById('mini-map').style.background = "linear-gradient(135deg, #a5d6a7, #81c784)";
+            document.getElementById('mini-map').innerHTML = `
+                <div style="display: flex; justify-content: center; align-items: center; height: 100%; color: #2e7d32; font-weight: bold;">
+                    <i class="fas fa-map-marker-alt" style="font-size: 2rem; margin-right: 10px;"></i>
+                    <span>Farm Location</span>
+                </div>
+            `;
+        }
+
+        function showAnalyticsContent() {
+            document.getElementById('analytics').innerHTML = `
+                <div class="form-container">
+                    <h3><i class="fas fa-chart-bar"></i> Enter Productivity Data</h3>
+                    <form id="productivityForm">
+                        <div class="input-grid">
+                            ${generateProductivityInputs()}
+                        </div>
+                        <button type="submit">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Generate Analytics</span>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="chart-container">
+                    <h3><i class="fas fa-chart-line"></i> Productivity Analysis</h3>
+                    <div id="productivityChart" style="height: 400px;"></div>
+                </div>
+
+                <div class="tech-ideas">
+                    <h3><i class="fas fa-lightbulb"></i> Smart Farming Recommendations</h3>
+                    <div class="tech-grid">
+                        <div class="tech-card">
+                            <h4><i class="fas fa-satellite-dish"></i> Precision Agriculture</h4>
+                            <p>Implement GPS and IoT-based monitoring for optimal crop yields and resource management.</p>
+                        </div>
+                        <div class="tech-card">
+                            <h4><i class="fas fa-water"></i> Smart Irrigation</h4>
+                            <p>Automated water management systems to improve efficiency and reduce water waste.</p>
+                        </div>
+                        <div class="tech-card">
+                            <h4><i class="fas fa-drone"></i> Drone Technology</h4>
+                            <p>Use drones for crop surveillance, pest control, and field analysis.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            attachProductivityFormListener();
+        }
+
+        function generateProductivityInputs() {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const currentMonth = new Date().getMonth();
+            let inputs = '';
+            
+            for (let i = 0; i <= currentMonth; i++) {
+                inputs += `
+                    <div class="input-group">
+                        <label for="${months[i].toLowerCase()}">${months[i]}</label>
+                        <input type="number" id="${months[i].toLowerCase()}" name="${months[i].toLowerCase()}" placeholder="Enter yield" required>
+                    </div>
+                `;
+            }
+            return inputs;
+        }
+
+        function attachProductivityFormListener() {
+            const form = document.getElementById('productivityForm');
+            if (form) {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const formData = new FormData(event.target);
+                    const productivityData = [...formData.values()].map(value => parseFloat(value));
+                    
+                    // Generate chart
+                    renderProductivityChart(productivityData);
+                });
+            }
+        }
+
+        function renderProductivityChart(data) {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].slice(0, data.length);
+            
+            new ApexCharts(document.querySelector("#productivityChart"), {
+                series: [{
+                    name: 'Productivity',
+                    data: data
+                }],
+                chart: {
+                    type: 'line',
+                    height: 400,
+                    toolbar: { show: true }
+                },
+                colors: ['#2e7d32'],
+                stroke: {
+                    width: 3,
+                    curve: 'smooth'
+                },
+                markers: {
+                    size: 5,
+                    colors: ['#2e7d32'],
+                    strokeWidth: 0
+                },
+                xaxis: {
+                    categories: months
+                },
+                yaxis: {
+                    title: {
+                        text: 'Yield (tons/hectare)'
+                    }
+                },
+                tooltip: {
+                    y: {
+                        formatter: function(value) {
+                            return value + " tons/hectare";
+                        }
+                    }
+                }
+            }).render();
+        }
+    </script>
+</body>
+</html>

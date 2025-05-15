@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Farmer Weather & Soil Forecast</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #60ad5e;
+            --primary-dark: #005005;
+            --secondary: #ff9800;
+            --danger: #d32f2f;
+            --warning: #ffa000;
+            --info: #1976d2;
+            --background: #f5f7fa;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --text-light: #666666;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --ai-blue: #2962ff;
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--ai-blue));
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .home-btn {
+            background-color: white;
+            color: var(--ai-blue);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .home-btn:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-2px);
+        }
+        
+        #map {
+            width: 100%;
+            height: 500px;
+            border: none;
+            box-shadow: var(--shadow);
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .info-box {
+            background: var(--card-bg);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: left;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .info-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .info-box h2 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .current-weather {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .weather-main {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            min-width: 250px;
+        }
+        
+        .weather-icon-container {
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            border-radius: 50%;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        #weather-icon {
+            width: 80px;
+            height: 80px;
+        }
+        
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            flex-grow: 1;
+        }
+        
+        .weather-detail {
+            background: rgba(0, 0, 0, 0.03);
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .weather-detail i {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .nearby-weather {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .nearby-item {
+            background: linear-gradient(135deg, var(--card-bg), #f5f5f5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+            position: relative;
+        }
+        
+        .nearby-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nearby-item strong {
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark), var(--ai-blue));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .footer-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        /* AI Assistant Section */
+        .ai-assistant {
+            background: linear-gradient(135deg, #f5f7fa, #e3f2fd);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--ai-blue);
+        }
+        
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .ai-icon {
+            background-color: var(--ai-blue);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .ai-title {
+            font-weight: 600;
+            color: var(--ai-blue);
+            font-size: 1.3rem;
+        }
+        
+        .ai-message {
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .ai-message:after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            border-width: 0 10px 10px 10px;
+            border-style: solid;
+            border-color: transparent transparent white transparent;
+        }
+        
+        .ai-analysis {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: rgba(41, 98, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .ai-analysis h4 {
+            margin-top: 0;
+            color: var(--ai-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+        
+        .alert-warning {
+            background-color: rgba(255, 160, 0, 0.1);
+            border-left: 4px solid var(--warning);
+            color: var(--warning);
+        }
+        
+        .alert-danger {
+            background-color: rgba(211, 47, 47, 0.1);
+            border-left: 4px solid var(--danger);
+            color: var(--danger);
+        }
+        
+        .alert-info {
+            background-color: rgba(25, 118, 210, 0.1);
+            border-left: 4px solid var(--info);
+            color: var(--info);
+        }
+        
+        .crop-selector {
+            margin: 20px 0;
+        }
+        
+        .crop-selector select {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-family: 'Poppins', sans-serif;
+            width: 100%;
+            max-width: 300px;
+            background-color: white;
+        }
+        
+        .soil-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .soil-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--primary);
+        }
+        
+        .soil-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .soil-card h4 {
+            margin-top: 0;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .progress-container {
+            background-color: #eee;
+            border-radius: 10px;
+            height: 10px;
+            margin: 10px 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--primary-light), var(--primary));
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 20px;
+        }
+        
+        .loading i {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .current-weather {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .weather-details {
+                width: 100%;
+            }
+            
+            .nearby-weather {
+                grid-template-columns: 1fr;
+            }
+            
+            .soil-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1><i class="fas fa-robot"></i> AI Farmer Assistant</h1>
+            <a href="/Chatbot" style="text-decoration: none;"><button class="home-btn"><i class="fas fa-home"></i>Back</button></a>
+        </div>
+    </header>
+
+    <iframe id="map" src="https://www.ventusky.com/?p=19.0755;83.8128;5&l=temperature&menu=1&search=1" frameborder="0"></iframe>
+
+    <div class="container">
+        <div class="ai-assistant">
+            <div class="ai-header">
+                <div class="ai-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="ai-title">AI Weather & Soil Analysis</div>
+            </div>
+            <div class="ai-message" id="ai-message">
+                <p>Hello! I'm your AI farming assistant. I'm analyzing your local weather conditions to provide personalized recommendations for your crops.</p>
+            </div>
+
+            <div class="ai-analysis" id="ai-analysis">
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <span>Analyzing weather and soil conditions...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h2><i class="fas fa-map-marker-alt"></i> Current Location Weather</h2>
+            <div class="current-weather">
+                <div class="weather-main">
+                    <div class="weather-icon-container">
+                        <img id="weather-icon" src="" alt="Weather Icon">
+                    </div>
+                    <div>
+                        <p id="current-weather-data" style="font-size: 1.2rem; font-weight: 500; margin: 0;">Fetching weather...</p>
+                        <div id="weather-alerts"></div>
+                    </div>
+                </div>
+                <div class="weather-details">
+                    <div class="weather-detail">
+                        <i class="fas fa-temperature-high"></i>
+                        <div>
+                            <strong>Temperature</strong>
+                            <p id="temp">--°C</p>
+                        </div>
+                    </div>
+                    <div class="weather-detail">
+                        <i class="fas fa-tint"></i>
+                        <div>
+                            <strong>Humidity</strong>
+                            <p id="humidity">--%</p>
+                        </div>
+                    </div>
+                    <div class="weather-detail">
+                        <i class="fas fa-wind"></i>
+                        <div>
+                            <strong>Wind Speed</strong>
+                            <p id="wind">-- km/h</p>
+                        </div>
+                    </div>
+                    <div class="weather-detail">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <div>
+                            <strong>Pressure</strong>
+                            <p id="pressure">-- hPa</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h2><i class="fas fa-globe-asia"></i> Nearby Locations Weather</h2>
+            <div id="nearby-weather-data" class="nearby-weather">
+                <div class="nearby-item" style="grid-column: 1 / -1; text-align: center;">
+                    <p>Fetching nearby weather data...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h2><i class="fas fa-seedling"></i> Soil Conditions Analysis</h2>
+            <div class="soil-info">
+                <div class="soil-card">
+                    <h4><i class="fas fa-droplet"></i> Soil Moisture</h4>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="soil-moisture-bar" style="width: 0%"></div>
+                    </div>
+                    <p id="soil-moisture-text">Calculating...</p>
+                </div>
+                <div class="soil-card">
+                    <h4><i class="fas fa-temperature-low"></i> Soil Temperature</h4>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="soil-temp-bar" style="width: 0%"></div>
+                    </div>
+                    <p id="soil-temp-text">Calculating...</p>
+                </div>
+                <div class="soil-card">
+                    <h4><i class="fas fa-flask"></i> Nutrient Levels</h4>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="nutrient-bar" style="width: 0%"></div>
+                    </div>
+                    <p id="nutrient-text">Calculating...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-icons">
+                <i class="fas fa-robot"></i>
+                <i class="fas fa-cloud-sun-rain"></i>
+                <i class="fas fa-seedling"></i>
+            </div>
+            <p>🌱 Powered by AI Weather Analysis | Agricultural Decision Support System</p>
+            <p>© 2025 AI Farmer Assistant. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const apiKey = '1bd211ccac1acd763da13e547abcf657';
+        const defaultLat = 19.0755;
+        const defaultLon = 83.8128;
+        let currentCrop = 'rice';
+
+        const cropConditions = {
+            rice: {
+                optimalTemp: { min: 20, max: 35 },
+                optimalHumidity: { min: 70, max: 90 },
+                optimalRainfall: { min: 100, max: 200 },
+                risks: ['drought', 'low temperatures']
+            },
+            wheat: {
+                optimalTemp: { min: 15, max: 25 },
+                optimalHumidity: { min: 50, max: 70 },
+                optimalRainfall: { min: 50, max: 100 },
+                risks: ['high temperatures', 'excess rainfall']
+            },
+            corn: {
+                optimalTemp: { min: 20, max: 30 },
+                optimalHumidity: { min: 60, max: 80 },
+                optimalRainfall: { min: 50, max: 120 },
+                risks: ['frost', 'drought']
+            },
+            cotton: {
+                optimalTemp: { min: 25, max: 35 },
+                optimalHumidity: { min: 50, max: 70 },
+                optimalRainfall: { min: 50, max: 100 },
+                risks: ['excess rainfall', 'low temperatures']
+            },
+            sugarcane: {
+                optimalTemp: { min: 25, max: 35 },
+                optimalHumidity: { min: 60, max: 80 },
+                optimalRainfall: { min: 100, max: 150 },
+                risks: ['frost', 'drought']
+            },
+            soybean: {
+                optimalTemp: { min: 20, max: 30 },
+                optimalHumidity: { min: 60, max: 80 },
+                optimalRainfall: { min: 50, max: 100 },
+                risks: ['drought', 'waterlogging']
+            },
+            vegetables: {
+                optimalTemp: { min: 15, max: 30 },
+                optimalHumidity: { min: 60, max: 80 },
+                optimalRainfall: { min: 30, max: 80 },
+                risks: ['extreme temperatures', 'pests']
+            },
+            fruits: {
+                optimalTemp: { min: 15, max: 30 },
+                optimalHumidity: { min: 60, max: 80 },
+                optimalRainfall: { min: 50, max: 100 },
+                risks: ['frost', 'hail']
+            }
+        };
+        
+        function fetchWeather(lat, lon) {
+            return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`)
+                .then(response => response.json())
+                .catch(error => console.error("Error fetching weather:", error));
+        }
+        
+        function fetchForecast(lat, lon) {
+            return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`)
+                .then(response => response.json())
+                .catch(error => console.error("Error fetching forecast:", error));
+        }
+        
+        function updateWeather(data) {
+            if (!data || !data.main) {
+                document.getElementById('current-weather-data').textContent = "Error fetching weather data. Please try again later.";
+                return;
+            }
+
+            document.getElementById('current-weather-data').textContent = `${data.name} - ${capitalizeFirstLetter(data.weather[0].description)}`;
+            document.getElementById('temp').textContent = `${Math.round(data.main.temp)}°C`;
+            document.getElementById('humidity').textContent = `${data.main.humidity}%`;
+            document.getElementById('wind').textContent = `${data.wind.speed} km/h`;
+            document.getElementById('pressure').textContent = `${data.main.pressure} hPa`;
+
+            const weatherIcon = document.getElementById('weather-icon');
+            weatherIcon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+            weatherIcon.alt = data.weather[0].description;
+
+            checkWeatherAlerts(data);
+
+            updateAIAnalysis(data);
+            
+            fetchNearbyCities(data.coord.lat, data.coord.lon);
+            
+            updateSoilConditions(data);
+        }
+        
+        function checkWeatherAlerts(data) {
+            const alertsContainer = document.getElementById('weather-alerts');
+            alertsContainer.innerHTML = '';
+            
+            const temp = data.main.temp;
+            const humidity = data.main.humidity;
+            const windSpeed = data.wind.speed;
+            const weatherMain = data.weather[0].main.toLowerCase();
+
+            if (temp > 35) {
+                addAlert(alertsContainer, 'warning', 'High temperature warning! This may stress your crops.', 'fas fa-temperature-high');
+            } else if (temp < 10) {
+                addAlert(alertsContainer, 'danger', 'Low temperature warning! Risk of frost damage to crops.', 'fas fa-temperature-low');
+            }
+
+            if (humidity > 85) {
+                addAlert(alertsContainer, 'warning', 'High humidity! Increased risk of fungal diseases.', 'fas fa-tint');
+            } else if (humidity < 40) {
+                addAlert(alertsContainer, 'warning', 'Low humidity! Plants may experience water stress.', 'fas fa-tint');
+            }
+            
+            if (windSpeed > 20) {
+                addAlert(alertsContainer, 'danger', 'High winds! Risk of physical damage to crops.', 'fas fa-wind');
+            }
+            
+            if (weatherMain.includes('rain') || weatherMain.includes('storm')) {
+                addAlert(alertsContainer, 'info', 'Rain expected. Irrigation may not be needed.', 'fas fa-cloud-rain');
+            } else if (weatherMain.includes('clear') && humidity < 50) {
+                addAlert(alertsContainer, 'warning', 'Dry conditions. Consider irrigation.', 'fas fa-sun');
+            }
+            
+            checkCropSpecificConditions(data);
+        }
+        
+        function checkCropSpecificConditions(data) {
+            const crop = cropConditions[currentCrop];
+            const temp = data.main.temp;
+            const humidity = data.main.humidity;
+            const alertsContainer = document.getElementById('weather-alerts');
+            
+            if (temp < crop.optimalTemp.min) {
+                addAlert(alertsContainer, 'danger', `Low temperature for ${currentCrop}! Below optimal range (${crop.optimalTemp.min}-${crop.optimalTemp.max}°C).`, 'fas fa-temperature-low');
+            } else if (temp > crop.optimalTemp.max) {
+                addAlert(alertsContainer, 'danger', `High temperature for ${currentCrop}! Above optimal range (${crop.optimalTemp.min}-${crop.optimalTemp.max}°C).`, 'fas fa-temperature-high');
+            }
+            
+            if (humidity < crop.optimalHumidity.min) {
+                addAlert(alertsContainer, 'warning', `Low humidity for ${currentCrop}! Below optimal range (${crop.optimalHumidity.min}-${crop.optimalHumidity.max}%).`, 'fas fa-tint');
+            } else if (humidity > crop.optimalHumidity.max) {
+                addAlert(alertsContainer, 'warning', `High humidity for ${currentCrop}! Above optimal range (${crop.optimalHumidity.min}-${crop.optimalHumidity.max}%).`, 'fas fa-tint');
+            }
+        }
+        
+        function addAlert(container, type, message, icon) {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+            container.appendChild(alert);
+        }
+        
+        function fetchNearbyCities(lat, lon) {
+            const offsets = [
+                { latOffset: 0.5, lonOffset: 0.5, name: "Northeast" },
+                { latOffset: -0.5, lonOffset: -0.5, name: "Southwest" },
+                { latOffset: 0.5, lonOffset: -0.5, name: "Northwest" },
+                { latOffset: -0.5, lonOffset: 0.5, name: "Southeast" },
+                { latOffset: 0.7, lonOffset: 0, name: "North" },
+                { latOffset: -0.7, lonOffset: 0, name: "South" }
+            ];
+            
+            const nearbyContainer = document.getElementById('nearby-weather-data');
+            nearbyContainer.innerHTML = '<div class="nearby-item" style="grid-column: 1 / -1; text-align: center;"><p><i class="fas fa-spinner fa-spin"></i> Loading nearby weather data...</p></div>';
+
+            let nearbyCities = offsets.map(offset => fetchWeather(lat + offset.latOffset, lon + offset.lonOffset));
+            
+            Promise.all(nearbyCities).then(results => {
+                nearbyContainer.innerHTML = "";
+                results.forEach((data, index) => {
+                    if (data && data.main) {
+                        const item = document.createElement('div');
+                        item.className = "nearby-item";
+
+                        let riskWarning = '';
+                        const temp = data.main.temp;
+                        const crop = cropConditions[currentCrop];
+                        
+                        if (temp < crop.optimalTemp.min - 5 || temp > crop.optimalTemp.max + 5) {
+                            riskWarning = '<div style="color: var(--danger); font-size: 0.8rem; margin-top: 5px;"><i class="fas fa-exclamation-triangle"></i> Potential risk for crops</div>';
+                        }
+                        
+                        item.innerHTML = `
+                            <strong><i class="fas fa-map-pin"></i> ${data.name}</strong>
+                            <p><i class="fas fa-temperature-high"></i> Temp: ${Math.round(data.main.temp)}°C</p>
+                            <p><i class="fas fa-cloud"></i> ${capitalizeFirstLetter(data.weather[0].description)}</p>
+                            <p><i class="fas fa-tint"></i> Humidity: ${data.main.humidity}%</p>
+                            ${riskWarning}
+                        `;
+                        nearbyContainer.appendChild(item);
+                    }
+                });
+            });
+        }
+        
+        function updateAIAnalysis(data) {
+            const analysisContainer = document.getElementById('ai-analysis');
+            
+            if (!data || !data.main) {
+                analysisContainer.innerHTML = '<div class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> Unable to analyze weather data. Please try again later.</div>';
+                return;
+            }
+            
+            const temp = data.main.temp;
+            const humidity = data.main.humidity;
+            const weatherMain = data.weather[0].main.toLowerCase();
+            const crop = cropConditions[currentCrop];
+            
+            // Generate AI recommendations
+            let recommendations = [];
+            let warnings = [];
+            
+            // Temperature analysis
+            if (temp < crop.optimalTemp.min) {
+                warnings.push(`Temperatures are below optimal range for ${currentCrop} (${crop.optimalTemp.min}-${crop.optimalTemp.max}°C).`);
+                recommendations.push("Consider using protective covers or greenhouses to retain heat.");
+            } else if (temp > crop.optimalTemp.max) {
+                warnings.push(`Temperatures are above optimal range for ${currentCrop} (${crop.optimalTemp.min}-${crop.optimalTemp.max}°C).`);
+                recommendations.push("Ensure adequate irrigation to prevent heat stress. Consider shade nets if heat persists.");
+            }
+            
+            // Humidity analysis
+            if (humidity < crop.optimalHumidity.min) {
+                warnings.push(`Low humidity may cause water stress for ${currentCrop}.`);
+                recommendations.push("Increase irrigation frequency. Mulching can help retain soil moisture.");
+            } else if (humidity > crop.optimalHumidity.max) {
+                warnings.push(`High humidity increases risk of fungal diseases for ${currentCrop}.`);
+                recommendations.push("Ensure proper spacing between plants for air circulation. Consider fungicide application if needed.");
+            }
+            
+            // Weather condition analysis
+            if (weatherMain.includes('rain') || weatherMain.includes('storm')) {
+                recommendations.push("Recent rainfall detected. You may reduce irrigation to prevent waterlogging.");
+            } else if (weatherMain.includes('clear') && humidity < 50) {
+                recommendations.push("Dry conditions detected. Monitor soil moisture and irrigate as needed.");
+            }
+            
+            // Display analysis
+            let analysisHTML = `
+                <h4><i class="fas fa-lightbulb"></i> AI Recommendations</h4>
+                <ul style="padding-left: 20px;">
+                    ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                </ul>
+            `;
+            
+            // Add forecast analysis
+            fetchForecast(data.coord.lat, data.coord.lon).then(forecastData => {
+                if (forecastData && forecastData.list) {
+                    const upcomingRain = forecastData.list.some(item => 
+                        item.weather[0].main.toLowerCase().includes('rain') ||
+                        item.weather[0].main.toLowerCase().includes('storm')
+                    );
+                    
+                    const upcomingCold = forecastData.list.some(item => item.main.temp < crop.optimalTemp.min);
+                    const upcomingHeat = forecastData.list.some(item => item.main.temp > crop.optimalTemp.max);
+                    
+                    if (upcomingRain || upcomingCold || upcomingHeat) {
+                        analysisHTML += `
+                            <h4><i class="fas fa-clock"></i> Upcoming Weather Alert</h4>
+                            <div class="alert alert-warning">
+                                <i class="fas fa-bell"></i> 
+                                <strong>Forecast notice:</strong> 
+                                ${upcomingRain ? 'Rain expected in coming days. ' : ''}
+                                ${upcomingCold ? 'Cold temperatures expected. ' : ''}
+                                ${upcomingHeat ? 'Heat wave expected. ' : ''}
+                                Plan accordingly.
+                            </div>
+                        `;
+                    }
+                    
+                    analysisContainer.innerHTML = analysisHTML;
+                }
+            }).catch(() => {
+                analysisContainer.innerHTML = analysisHTML;
+            });
+        }
+        
+        function updateSoilConditions(data) {
+            // Simulate soil data based on weather conditions
+            const temp = data.main.temp;
+            const humidity = data.main.humidity;
+            const weatherMain = data.weather[0].main.toLowerCase();
+            
+            // Soil moisture (0-100%)
+            let moisture = humidity; // Start with air humidity as base
+            if (weatherMain.includes('rain')) moisture += 30;
+            else if (weatherMain.includes('clear')) moisture -= 15;
+            moisture = Math.min(100, Math.max(0, moisture));
+            
+            // Soil temperature (based on air temp with some variation)
+            const soilTemp = temp + (Math.random() * 5 - 2.5); // ±2.5°C variation
+            
+            // Nutrient levels (simulated)
+            const nutrients = 60 + (Math.random() * 20 - 10); // 50-70% range
+            
+            // Update UI
+            document.getElementById('soil-moisture-bar').style.width = `${moisture}%`;
+            document.getElementById('soil-moisture-text').textContent = 
+                moisture > 70 ? 'High moisture (risk of waterlogging)' :
+                moisture < 30 ? 'Low moisture (irrigation needed)' :
+                'Optimal moisture level';
+            
+            document.getElementById('soil-temp-bar').style.width = `${Math.min(100, Math.max(0, soilTemp))}%`;
+            document.getElementById('soil-temp-text').textContent = 
+                `${soilTemp.toFixed(1)}°C - ${soilTemp > 35 ? 'Too hot for most crops' : 
+                soilTemp < 10 ? 'Too cold for most crops' : 'Optimal range'}`;
+            
+            document.getElementById('nutrient-bar').style.width = `${nutrients}%`;
+            document.getElementById('nutrient-text').textContent = 
+                nutrients > 70 ? 'Rich in nutrients' :
+                nutrients < 50 ? 'Low nutrients (consider fertilization)' :
+                'Moderate nutrient levels';
+        }
+        
+        function capitalizeFirstLetter(string) {
+            return string.split(' ').map(word => 
+                word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
+        }
+        
+        fetchWeather(defaultLat, defaultLon).then(updateWeather);
+        
+        document.querySelector('.home-btn').addEventListener('click', () => {
+            fetchWeather(defaultLat, defaultLon).then(updateWeather);
+            document.getElementById('map').src = `https://www.ventusky.com/?p=${defaultLat};${defaultLon};5&l=temperature&menu=1&search=1`;
+        });
+        
+        document.getElementById('crop-select').addEventListener('change', (e) => {
+            currentCrop = e.target.value;
+            fetchWeather(defaultLat, defaultLon).then(updateWeather);
+        });
+
+        app.get('/get_weather_warnings', (req, res) => {
+            const warnings = {
+                forecast_notice: "Rain expected in coming days. Heat wave expected. Plan accordingly.",
+                current_weather: "Gunupur - Scattered Clouds",
+                temperature: 27,
+                humidity: 72,
+                wind_speed: 2.51,
+                pressure: 1014
+            };
+            res.json(warnings);
+        });
+    </script>
+</body>
+</html>

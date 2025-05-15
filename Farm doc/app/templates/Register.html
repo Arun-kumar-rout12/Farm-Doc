@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | Farm Doc</title>
+  <link rel="icon" href="static/images/farmer (2).png" type="image/png">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+    body { 
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: url('static/images/farmer-5702664.jpg') no-repeat center center/cover;
+      position: relative;
+      padding: 15px;
+    }
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+    .navbar {
+      width: 100%;
+      padding: 5px 0;
+      background: transparent !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .navbar-brand {
+      margin-left:50px;
+      color: white !important;
+      font-size: 35px;
+      font-weight: 700;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid white;
+      width: 0;
+      animation: typing 3s steps(25) forwards, blink 0.7s infinite;
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 300px; }
+    }
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+    .glass-container {
+      width: 100%;
+      max-width: 800px;
+      text-align: center;
+      color: white;
+      padding: 20px;
+      background: none;
+    }
+    .form-control {
+      background: rgba(255, 255, 255, 0.3);
+      color: white;
+      border: none;
+      height: 45px;
+      font-size: 14px;
+    }
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.8);
+    }
+    .btn-primary {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      background: #0b3d91;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-primary:hover {
+      background: #092b6f;
+    }
+    .gov-logo {
+      width: 60px;
+      margin-bottom: 8px;
+    }
+    .footer {
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      position: absolute;
+      bottom: 0;
+    }
+    @media (max-width: 576px) {
+      .glass-container {
+        padding: 15px;
+      }
+      .btn-primary {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <a class="navbar-brand">Farmers Doctor</a>
+    </div>
+  </nav>
+  <div class="glass-container">
+    <img src="static/images/security-scan.png" alt="Gov Logo" class="gov-logo">
+    <h3 class="fw-bold">Farmer Registration</h3>
+    <p>Fill in your details to register</p>
+    {% if error %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    {% if success %}
+      <div class="alert alert-success">{{ success }}</div>
+    {% endif %}
+    <form id="farmerForm" method="POST" action="{{ url_for('Register') }}">
+        <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="farmerName" name="farmerName" placeholder="Full Name" required>
+            <label for="farmerName">Full Name</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input type="tel" class="form-control" id="Password" name="Password" placeholder="Password" required>
+            <label for="Password">Password</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="farmerAddress" name="farmerAddress" placeholder="Address" required>
+            <label for="farmerAddress">Address</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input type="number" class="form-control" id="farmSize" name="farmSize" placeholder="Farm Size in acres" required>
+            <label for="farmSize">Farm Size (in acres)</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input type="number" class="form-control" id="farmingExperience" name="farmingExperience" placeholder="Farming Experience (in years)" required>
+            <label for="farmingExperience">Farming Experience (in years)</label>
+        </div>
+        <div class="form-floating mb-2">
+            <select class="form-control" id="farmingMethod" name="farmingMethod" required>
+                <option value="">Select Farming Method</option>
+                <option value="Organic">Organic</option>
+                <option value="Conventional">Conventional</option>
+                <option value="Hydroponic">Hydroponic</option>
+            </select>
+            <label for="farmingMethod">Preferred Farming Method</label>
+        </div>
+        <button type="submit" class="btn-primary mt-2">Register</button>
+    </form>
+    <div class="login-options">
+    Already have an account <a href="/"><u>Login</u></a> ?
+      </div>
+  </div>
+  <footer class="footer">
+    <p>&copy; 2025 Farmers Doctor. All rights reserved.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'hi,bn,te,mr,ta,gu,ur,ml,kn,or,pa,as,ne,sd',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+    }
+
+    window.onload = function () {
+        const savedLanguage = localStorage.getItem('selectedLanguage');
+        if (savedLanguage) {
+            const translateElement = document.querySelector('.goog-te-combo');
+            if (translateElement) {
+                translateElement.value = savedLanguage;
+                translateElement.dispatchEvent(new Event('change'));
+            }
+        }
+    };
+  </script>
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="static/images/software-application.png" type="image/png">
+    <title>Farm Doc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            background: var(--background);
+            color: var(--text-color);
+            transition: all 0.3s ease-in-out;
+        }
+
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --primary-light: #C8E6C9;
+            --secondary: #FF9800;
+            --background: #F3F4F6;
+            --text-color: #333;
+            --sidebar-bg: #1F2937;
+            --sidebar-text: #E5E7EB;
+            --input-bg: #FFFFFF;
+            --button-bg: #4CAF50;
+            --button-text: #FFFFFF;
+            --user-message: #4CAF50;
+            --bot-message: #E5E7EB;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        :root.dark {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --primary-light: #2E7D32;
+            --secondary: #FFA000;
+            --background: #1E293B;
+            --text-color: #E5E7EB;
+            --sidebar-bg: #111827;
+            --sidebar-text: #9CA3AF;
+            --input-bg: #374151;
+            --button-bg: #4CAF50;
+            --button-text: #E5E7EB;
+            --user-message: #4CAF50;
+            --bot-message: #4B5563;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Enhanced Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            z-index: 10;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--sidebar-text);
+        }
+
+        .sidebar-icon {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .theme-toggle {
+            margin-top: auto;
+            background: none;
+            border: 1px solid var(--sidebar-text);
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: var(--sidebar-text);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-toggle:hover {
+            background: var(--sidebar-text);
+            color: var(--sidebar-bg);
+        }
+
+        .theme-toggle i {
+            font-size: 1rem;
+        }
+
+        /* Chat Area */
+        .chat {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--background);
+        }
+
+        #header {
+            padding: 15px 20px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: var(--primary);
+            color: var(--button-text);
+            text-align: center;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        #header i {
+            font-size: 1.5rem;
+        }
+
+        #messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 15px 20px;
+            border-radius: 18px;
+            font-size: 1rem;
+            line-height: 1.6;
+            box-shadow: var(--shadow);
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+            word-wrap: break-word;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user {
+            align-self: flex-end;
+            background: var(--user-message);
+            color: #FFF;
+            border-bottom-right-radius: 5px;
+        }
+
+        .bot {
+            align-self: flex-start;
+            background: var(--bot-message);
+            color: var(--text-color);
+            border-bottom-left-radius: 5px;
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 15px 20px;
+            background: var(--bot-message);
+            border-radius: 18px;
+            width: fit-content;
+            box-shadow: var(--shadow);
+            margin-bottom: 15px;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--text-color);
+            border-radius: 50%;
+            animation: typing 1.5s infinite ease-in-out;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        #footer {
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            background: var(--input-bg);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            align-items: center;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            background: var(--input-bg);
+            color: var(--text-color);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        input[type="text"]:focus {
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 0 2px var(--primary);
+        }
+
+        #footer button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            background: var(--button-bg);
+            color: var(--button-text);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #footer button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        #footer button i {
+            font-size: 1rem;
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+        }
+
+        .file-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            background: var(--secondary);
+            color: var(--button-text);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .file-label:hover {
+            background: #F57C00;
+            transform: translateY(-2px);
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid var(--button-text);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Enhanced Disease Cards */
+        .disease-card {
+            background: var(--input-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .disease-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .disease-card h4 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+
+        .disease-card p {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .disease-icon {
+            font-size: 1.8rem;
+            color: var(--primary);
+            width: 50px;
+            height: 50px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .disease-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        /* Disease Details */
+        .disease-details {
+            background: var(--input-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-top: 15px;
+        }
+
+        .disease-details h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .disease-details h3 i {
+            color: var(--secondary);
+        }
+
+        .detail-item {
+            margin-bottom: 15px;
+        }
+
+        .detail-item h4 {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.7;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-item p {
+            font-size: 0.95rem;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .solution-steps {
+            margin-top: 20px;
+        }
+
+        .solution-steps h4 {
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .solution-steps ol {
+            padding-left: 20px;
+        }
+
+        .solution-steps li {
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+
+        /* Image Preview */
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 12px;
+            margin-top: 10px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* Enhanced News Carousel */
+        .daily-feed {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--input-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .daily-feed h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .carousel-item {
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+
+        .carousel-item img {
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .carousel-item h5 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+
+        .carousel-item p {
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .carousel-item a {
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--button-text);
+            background: var(--primary);
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .carousel-item a:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            filter: invert(1);
+        }
+
+        .carousel-inner {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .view-details-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: var(--transition);
+        }
+
+        .view-details-button:hover {
+            background: var(--primary-dark);
+        }
+
+        @media (max-width: 768px) {
+            .carousel-item h5 {
+                font-size: 1rem;
+            }
+
+            .carousel-item p {
+                font-size: 0.9rem;
+            }
+
+            .carousel-item a {
+                font-size: 0.9rem;
+                padding: 8px 12px;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                padding: 15px;
+            }
+            
+            .sidebar-header {
+                margin-bottom: 15px;
+                padding-bottom: 15px;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+            
+            .disease-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-leaf sidebar-icon"></i>
+                <h1>Farm Doc</h1>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i> Toggle Theme
+            </button>
+        </div>
+        <div class="chat">
+            <div id="header">
+                <i class="fas fa-robot"></i>
+                <span>Farm Assistant</span>
+            </div>
+            <div id="messages"></div>
+            <div id="footer">
+                <div class="loader" id="loader"></div>
+                <input type="text" id="userInput" placeholder="Ask about crops, livestock, or upload an image..." onkeydown="checkEnter(event)">
+                <button onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i> Send
+                </button>
+                <div class="file-upload">
+                    <label for="fileInput" class="file-label">
+                        <i class="fas fa-camera"></i>
+                    </label>
+                    <input type="file" id="fileInput" accept="image/*" capture="environment" onchange="handleFileUpload(event)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedFile = null;
+        let diagnosisDetails = null;
+
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+        }
+
+        function handleFileUpload(event) {
+            selectedFile = event.target.files[0];
+            if (selectedFile) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const previewContainer = document.createElement("div");
+                    previewContainer.className = "image-preview-container";
+                    previewContainer.style.textAlign = "right"; 
+                    previewContainer.innerHTML = `<img src="${e.target.result}" class="image-preview">`;
+                    document.getElementById("messages").appendChild(previewContainer);
+                    document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+                };
+                reader.readAsDataURL(selectedFile);
+            }
+        }
+
+        function checkEnter(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function getCurrentTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '0'+minutes : minutes;
+            return `Today, ${hours}:${minutes} ${ampm}`;
+        }
+
+        function checkForPageRedirect(message) {
+            const pageMappings = {
+                'home': '/',
+                'main page': '/',
+                'techniques': '/hub',
+                'insights': '/hub',
+                'loan': '/Loan',
+                'weather': '/Wheather',
+                'about': '/About_us',
+                'about us': '/About_us',
+                'profile': '/Profile',
+                'login': '/Authentication',
+                'sign in': '/Authentication',
+                'register': '/Register',
+                'sign up': '/Register'
+            };
+
+            if (pageMappings[message]) {
+                return pageMappings[message];
+            }
+
+            for (const [key, value] of Object.entries(pageMappings)) {
+                if (message.includes(key)) {
+                    return value;
+                }
+            }
+
+            return null;
+        }
+
+        function checkForLogout(message) {
+            const logoutKeywords = ['logout', 'log out', 'sign out'];
+            return logoutKeywords.some(keyword => message.includes(keyword));
+        }
+
+        async function sendMessage() {
+            const inputField = document.getElementById("userInput");
+            const message = inputField.value.trim().toLowerCase();
+            const loader = document.getElementById("loader");
+
+            if (!message && !selectedFile) return;
+
+            if (checkForLogout(message)) {
+                window.location.href = '/Logout';
+                return;
+            }
+
+            const redirectUrl = checkForPageRedirect(message);
+            if (redirectUrl) {
+                window.location.href = redirectUrl;
+                return;
+            }
+
+            if (message) {
+                addMessage(message, "user");
+            }
+
+            loader.style.display = "block";
+
+            const formData = new FormData();
+            formData.append('message', message);
+            if (selectedFile) {
+                formData.append('file', selectedFile);
+            }
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const result = await response.json();
+                if (result.image_prediction) {
+                    const prediction = result.image_prediction.disease.split("___");
+                    const cropName = prediction[0];
+                    const diseaseName = prediction[1].replace(/_/g, " ");
+                    const confidence = result.image_prediction.confidence || 0;
+
+                    // Fetch disease details
+                    const detailsResponse = await fetch(`/crop_disease_details?crop_name=${encodeURIComponent(cropName)}&disease_name=${encodeURIComponent(diseaseName)}`);
+                    const details = await detailsResponse.json();
+
+                    if (details.error) {
+                        displayDiseaseDetails({
+                            error: details.error,
+                            Problem: diseaseName // Pass the disease name we detected
+                        }, confidence); // Pass the confidence score
+                    } else {
+                        displayDiseaseDetails(details, confidence);
+                    }
+                }
+
+                if (result.message_response) {
+                    addMessage(result.message_response, "bot");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                addMessage(`<div class="disease-details" style="background-color: #FFEBEE;">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Error</h3>
+                    <p>There was an error processing your request. Please try again later.</p>
+                    <div class="message-time">${getCurrentTime()}</div>
+                </div>`, "bot");
+            } finally {
+                loader.style.display = "none";
+            }
+
+            inputField.value = "";
+            selectedFile = null;
+        }
+
+        function addMessage(msg, sender) {
+            const messagesContainer = document.getElementById("messages");
+            const messageElement = document.createElement("div");
+            messageElement.className = `message ${sender}`;
+            
+            if (sender === "user") {
+                messageElement.innerHTML = `
+                    <div>${msg}</div>
+                    <div class="message-time">${getCurrentTime()}</div>
+                `;
+            } else {
+                messageElement.innerHTML = msg;
+            }
+            
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function displayDiseaseDetails(details, confidence) {
+            if (details.error || !details["Problem"]) {
+
+                let diseaseName = "Unknown Disease";
+                if (details.error) {
+                    const match = details.error.match(/disease '([^']+)'/);
+                    if (match && match[1]) {
+                        diseaseName = match[1];
+                    }
+                } else if (details["Problem"]) {
+                    diseaseName = details["Problem"];
+                }
+
+                const confidencePercentage = confidence ? (confidence * 100).toFixed(2) : "0.00";
+                const fallbackMessage = `
+                    <div class="disease-details">
+                        <h3><i class="fas fa-info-circle"></i> Diagnosis Summary</h3>
+                        <div class="detail-item">
+                            <h4><i class="fas fa-bug"></i> Disease Detected</h4>
+                            <p>${diseaseName}</p>
+                        </div>
+                        <div class="detail-item">
+                            <h4><i class="fas fa-percentage"></i> Confidence Level</h4>
+                            <p>${confidencePercentage}%</p>
+                        </div>
+                        <div class="detail-item">
+                            <h4><i class="fas fa-info-circle"></i> General Advice</h4>
+                            <ul style="margin-left: 20px;">
+                                <li>Isolate affected plants to prevent spread</li>
+                                <li>Remove and destroy severely infected plant parts</li>
+                                <li>Improve air circulation around plants</li>
+                                <li>Avoid overhead watering to reduce humidity</li>
+                                <li>Consider organic fungicides or pesticides</li>
+                                <li>Monitor plants closely for further symptoms</li>
+                            </ul>
+                        </div>
+                        <div class="message-time">${getCurrentTime()}</div>
+                    </div>
+                `;
+                addMessage(fallbackMessage, "bot");
+            } else {
+                const confidencePercentage = confidence ? (confidence * 100).toFixed(2) : "0.00";
+                const summaryMessage = `
+                    <div class="disease-details">
+                        <h3><i class="fas fa-info-circle"></i> Diagnosis Summary</h3>
+                        <div class="detail-item">
+                            <h4><i class="fas fa-bug"></i> Disease</h4>
+                            <p>${details["Problem"]}</p>
+                        </div>
+                        <div class="detail-item">
+                            <h4><i class="fas fa-percentage"></i> Confidence</h4>
+                            <p>${confidencePercentage}%</p>
+                        </div>
+                        <button class="view-details-button" onclick="showFullDetails('${encodeURIComponent(JSON.stringify(details))}')">
+                            View Details
+                        </button>
+                        <div class="message-time">${getCurrentTime()}</div>
+                    </div>
+                `;
+                addMessage(summaryMessage, "bot");
+            }
+        }
+
+        function showFullDetails(encodedDetails) {
+            const details = JSON.parse(decodeURIComponent(encodedDetails));
+            const detailMessage = `
+                <div class="disease-details">
+                    <h3><i class="fas fa-info-circle"></i> ${details["Crop_Name"] || "Unknown Crop"} - ${details["Problem"] || "Unknown Disease"}</h3>
+                    ${details["Crop Type"] ? `
+                    <div class="detail-item">
+                        <h4><i class="fas fa-tag"></i> Crop Type</h4>
+                        <p>${details["Crop Type"]}</p>
+                    </div>` : ''}
+                    <div class="detail-item">
+                        <h4><i class="fas fa-exclamation-triangle"></i>Result</h4>
+                        <p>${details["Problem"] || "No specific problem description available"}</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-lightbulb"></i> Solution</h4>
+                        <p>${details["Solution"] || "No specific solution available. Please consult with a local agricultural expert."}</p>
+                    </div>
+                    <div class="message-time">${getCurrentTime()}</div>
+                </div>
+            `;
+            addMessage(detailMessage, "bot");
+        }
+
+        async function handleDiseaseSelection(cropName, diseaseName) {
+            const response = await fetch(`/crop_disease_details?crop_name=${encodeURIComponent(cropName)}&disease_name=${encodeURIComponent(diseaseName)}`);
+            const details = await response.json();
+            if (details.error) {
+                displayDiseaseDetails({
+                    error: details.error,
+                    Problem: diseaseName
+                }, 0); 
+            } else {
+                displayDiseaseDetails(details, 0);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            addMessage(`<div class="disease-details">
+                <h3><i class="fas fa-leaf"></i> Welcome to Farm Doc!</h3>
+                <p>I'm your AI-powered farming assistant. You can ask me about:</p>
+                <ul style="margin-left: 20px;">
+                    <li>Crop diseases and treatments</li>
+                    <li>Upload images for disease diagnosis</li>
+                    <li>General farming advice</li>
+                    <li>Daily agricultural news</li>
+                    <li>Weather updates</li>
+                    <li>Loan information</li>
+                    <li>Farming techniques and insights</li>
+                </ul>
+                <p>Use the input box below to ask your questions or upload any type of crop related image for analysis.</p>
+                <div class="message-time">${getCurrentTime()}</div>
+            </div>`, "bot");
+        });
+
+        document.addEventListener('click', function (event) {
+            if (event.target.classList.contains('crop-button')) {
+                const cropName = event.target.dataset.crop;
+                fetchAndDisplayDiseases(cropName);
+            }
+        });
+
+        document.addEventListener('click', function (event) {
+            if (event.target.classList.contains('livestock-button')) {
+                const livestockType = event.target.dataset.livestock;
+                fetchAndDisplayLivestockDiseases(livestockType);
+            }
+        });
+
+        document.addEventListener('click', function (event) {
+            const diseaseCard = event.target.closest('.disease-card');
+            if (diseaseCard) {
+                const cropName = diseaseCard.dataset.crop;
+                const livestockType = diseaseCard.dataset.livestock;
+                const diseaseName = diseaseCard.dataset.disease;
+
+                if (cropName && diseaseName) {
+                    handleDiseaseSelection(cropName, diseaseName);
+                } else if (livestockType && diseaseName) {
+                    handleLivestockDiseaseSelection(livestockType, diseaseName);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
