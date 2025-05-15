@@ -1,0 +1,21 @@
+Crop_Name,Crop_Type,Farming_Season,Farming_Month,Problem,Solution
+Mangoes,Fruits,Summer,April-July,Anthracnose,Use coppe-ased fungicides
+Cotton,Cash Crops,Kharif,June-September,Bollworm Infestation,"Use Bt cotton, pheromone traps"
+Sunflower,Oilseed,Kharif & Rabi,June-September & October-March,Rust,"Apply sulfu-ased fungicides, improve ventilation"
+Millets,Cereal,Kharif,June-September,Blast Disease,"Caused by *Pyricularia grisea*, affects leaves and grains, reducing yield."
+Rice,Cereal,Kharif,June-October,Sheath Blight,"Caused by *Rhizoctonia solani*, appears as wate-oaked lesions on the sheath."
+Carrot,Biennial,Rabi,October-March,Nematode Infestation,"Use soil fumigation, rotate crops"
+Maize,Cereal,Kharif,June-September,Maize Lethal Necrosis,"Caused by a combination of Maize Chlorotic Mottle Virus and other viruses, results in yellowing and drying of leaves."
+Rice,Cereal,Kharif,June-October,Bacterial Leaf Blight,"Caused by *Xanthomonas oryzae*, results in yellowing and wilting of leaves."
+Barley,Cereal,Rabi,November-April,Barley Yellow Dwarf,"Caused by *Barley Yellow Dwarf Virus (BYDV)*, leads to stunted growth and yellow leaves."
+Pepper,Spices & Herbs,Perennial,Yea-ound,Wilt Disease,Use diseas-ree planting material
+Cardamom,Spices & Herbs,Perennial,Yea-ound,Cardamom Blight,Use coppe-ased sprays
+Carrots,Vegetables,Rabi,October-March,Root Knot Nematode,"Soil treatment, crop rotation"
+Cocoa,Beverage Crops,Perennial,Yea-ound,Black Pod Disease,Use coppe-ased fungicides
+Sweet Potatoes,Root & Tuber Crops,Kharif,June-September,Weevil Infestation,"Crop rotation, soil treatment"
+Maize,Cereal,Kharif,June-September,Southern Corn Leaf Blight,"Caused by *Bipolaris maydis*, results in elongated necrotic leaf lesions."
+Peas,Pulses/Legumes,Rabi,November-April,Powdery Mildew,Apply sulfu-ased fungicides
+Tomatoes,Vegetables,Kharif & Rabi,"June-September, November-April",Tomato Mosaic Virus,Leads to mosai-ike patterns and deformed leaves.
+Wheat,Cereal,Rabi,November-April,Tan Spot,"Caused by *Pyrenophora tritic-epentis*, creates necrotic spots on leaves."
+Jute,Cash Crops,Kharif,June-September,Stem Rot,"Use wel-rained soil, apply fungicide"
+Clove,Spice,Perennial,Throughout the year,Stem Wilt,"Use resistant varieties, apply biocontrol agents"

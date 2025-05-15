@@ -1,0 +1,11 @@
+query,response
+hii,"Error generating response: No API key provided. You can set your API key in code using 'openai.api_key = <API-KEY>', or you can set the environment variable OPENAI_API_KEY=<API-KEY>). If your API key is stored in a file, you can point the openai module at it with 'openai.api_key_path = <PATH>'. You can generate API keys in the OpenAI web interface. See https://platform.openai.com/account/api-keys for details."
+hii,"Error generating response: The model `text-davinci-003` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations"
+hii,"Error generating response: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors."
+i have a problem with crops,"Error generating response: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors."
+Hello,"Error generating response: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors."
+Crops,"Error generating response: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors."
+hii,"Error generating response: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors."
+hii,Greetings! Ready to tackle your farming challenges. What can I assist you with?
+I have a problem,"Tell me about your problem. Is it with crops, livestock, or farm management?"
+yes,"Alright, what's your next question?"
