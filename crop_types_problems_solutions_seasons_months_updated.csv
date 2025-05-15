@@ -1,0 +1,148 @@
+Crop_Name,Crop_Type,Farming_Season,Farming_Month,Problem,Solution
+Rice,Cereal,Kharif,June-October,Blast Disease,"Caused by *Magnaporthe oryzae*, affects leaves, nodes, and panicles, causing grayish spots."
+Rice,Cereal,Kharif,June-October,Sheath Blight,"Caused by *Rhizoctonia solani*, appears as wate-oaked lesions on the sheath."
+Rice,Cereal,Kharif,June-October,Bacterial Leaf Blight,"Caused by *Xanthomonas oryzae*, results in yellowing and wilting of leaves."
+Rice,Cereal,Kharif,June-October,False Smut,"Caused by *Ustilaginoidea virens*, leads to fungal growth on rice grains."
+Rice,Cereal,Kharif,June-October,Tungro Disease,"Caused by Rice Tungro Virus, transmitted by leafhoppers, stunts plant growth."
+Rice,Cereal,Kharif,June-October,Brown Spot,"Caused by *Cochliobolus miyabeanus*, forms brown lesions on leaves and grains."
+Rice,Cereal,Kharif,June-October,Bakanae Disease,"Caused by *Fusarium fujikuroi*, results in elongated, pal-reen seedlings."
+Rice,Cereal,Kharif,June-October,Grassy Stunt Disease,"Caused by Rice Grassy Stunt Virus, leading to excessive tillering and stunted growth."
+Wheat,Cereal,Rabi,November-April,Rust Disease,"Includes leaf rust, stem rust, and stripe rust, caused by *Puccinia* species, leading to pustules on leaves."
+Wheat,Cereal,Rabi,November-April,Powdery Mildew,"Caused by *Blumeria graminis*, creates white powdery patches on leaves."
+Wheat,Cereal,Rabi,November-April,Loose Smut,"Caused by *Ustilago tritici*, infects grains and replaces them with black spore masses."
+Wheat,Cereal,Rabi,November-April,Karnal Bunt,"Caused by *Tilletia indica*, forms black powdery spores in kernels."
+Wheat,Cereal,Rabi,November-April,Fusarium Head Blight,"Caused by *Fusarium graminearum*, results in shriveled, pinkish grains."
+Wheat,Cereal,Rabi,November-April,Septoria Leaf Blotch,"Caused by *Zymoseptoria tritici*, leads to brown lesions with dark fruiting bodies."
+Wheat,Cereal,Rabi,November-April,Tan Spot,"Caused by *Pyrenophora tritic-epentis*, creates necrotic spots on leaves."
+Maize,Cereal,Kharif,June-September,Stem Borer,"Larvae of *Chilo partellus* bore into stems, weakening plants and reducing yield."
+Maize,Cereal,Kharif,June-September,Downy Mildew,"Caused by *Peronosclerospora* species, forms yellowish streaks on leaves."
+Maize,Cereal,Kharif,June-September,Maize Streak Virus,"Transmitted by leafhoppers, causes yello-reen streaking and stunted growth."
+Maize,Cereal,Kharif,June-September,Common Rust,"Caused by *Puccinia sorghi*, leads to reddis-rown pustules on leaves."
+Maize,Cereal,Kharif,June-September,Northern Corn Leaf Blight,"Caused by *Exserohilum turcicum*, produces long gra-reen lesions on leaves."
+Maize,Cereal,Kharif,June-September,Southern Corn Leaf Blight,"Caused by *Bipolaris maydis*, results in elongated necrotic leaf lesions."
+Maize,Cereal,Kharif,June-September,Maize Lethal Necrosis,"Caused by a combination of Maize Chlorotic Mottle Virus and other viruses, results in yellowing and drying of leaves."
+Barley,Cereal,Rabi,November-April,Loose Smut,"Caused by *Ustilago nuda*, replaces healthy grains with black fungal spores."
+Barley,Cereal,Rabi,November-April,Barley Yellow Dwarf,"Caused by *Barley Yellow Dwarf Virus (BYDV)*, leads to stunted growth and yellow leaves."
+Barley,Cereal,Rabi,November-April,Net Blotch,"Caused by *Pyrenophora teres*, forms dark ne-ike lesions on leaves."
+Barley,Cereal,Rabi,November-April,Spot Blotch,"Caused by *Cochliobolus sativus*, results in brown necrotic spots on leaves."
+Barley,Cereal,Rabi,November-April,Scald,"Caused by *Rhynchosporium secalis*, produces wate-oaked lesions that later turn brown."
+Millets,Cereal,Kharif,June-September,Downy Mildew,"Caused by *Sclerospora graminicola*, creates chlorotic streaks and affects panicle development."
+Millets,Cereal,Kharif,June-September,Ergot Disease,"Caused by *Claviceps fusiformis*, results in fungal structures replacing grains."
+Millets,Cereal,Kharif,June-September,Blast Disease,"Caused by *Pyricularia grisea*, affects leaves and grains, reducing yield."
+Gram,Pulse,Rabi,October-March,Wilt Disease,"Use diseas-ree seeds, apply fungicides"
+Lentils,Pulse,Rabi,October-March,Yellow Mosaic Virus,"Use viru-ree seeds, control whiteflies"
+Moong,Pulse,Kharif,June-September,Blight Disease,"Use diseas-esistant seeds, apply coppe-ased sprays"
+Urad,Pulse,Kharif,June-September,Leaf Spot,"Apply copper fungicide, maintain field sanitation"
+Chickpea,Pulse,Rabi,October-March,Pod Borer,"Apply nee-ased insecticides, use resistant varieties"
+Mustard,Oilseed,Rabi,October-March,Aphid Infestation,"Use neem oil, introduce aphid predators"
+Groundnut,Oilseed,Kharif,June-September,Leaf Spot,"Apply copper fungicides, ensure proper irrigation"
+Sunflower,Oilseed,Kharif & Rabi,June-September & October-March,Rust,"Apply sulfu-ased fungicides, improve ventilation"
+Soybean,Oilseed,Kharif,June-September,Pod Shattering,"Harvest at optimal time, apply pod sealants"
+Sesame,Oilseed,Kharif,June-September,Wilt Disease,"Use resistant varieties, treat with bi-ontrol agents"
+Cotton,Fiber,Kharif,June-November,Bollworm,"Use Bt cotton, apply biological pesticides"
+Jute,Fiber,Kharif,March-July,Stem Rot,"Improve drainage, use resistant varieties"
+Sugarcane,Sugar,Annual,October-September,Red Rot,"Use resistant sugarcane varieties, remove affected plants"
+Sugar beet,Sugar,Rabi,October-April,Leaf Scorch,"Apply diseas-esistant fertilizers, maintain field hygiene"
+Tea,Beverage,Perennial,Throughout the year,Blister Blight,"Apply copper fungicides, use resistant tea varieties"
+Coffee,Beverage,Perennial,Throughout the year,Leaf Rust,"Use fungicides, maintain proper spacing"
+Cocoa,Beverage,Perennial,Throughout the year,Frost Damage,"Improve frost protection measures, use resistant varieties"
+Turmeric,Spice,Kharif,June-October,Rhizome Rot,"Improve drainage, treat rhizomes before planting"
+Black Pepper,Spice,Perennial,Throughout the year,Wilt Disease,"Use neem oil, apply potassiu-ased sprays"
+Cardamom,Spice,Perennial,Throughout the year,Leaf Blight,"Use bi-ungicides, improve soil health"
+Ginger,Spice,Kharif,June-October,Soft Rot,"Use wel-rained soil, treat with organic fungicides"
+Clove,Spice,Perennial,Throughout the year,Stem Wilt,"Use resistant varieties, apply biocontrol agents"
+Carrot,Biennial,Rabi,October-March,Nematode Infestation,"Use soil fumigation, rotate crops"
+Onion,Biennial,Kharif & Rabi,June-September & October-March,Onion Smudge,"Improve drainage, use coppe-ased sprays"
+Beetroot,Biennial,Rabi,October-March,Root Rot,"Use wel-rained soil, apply fungicide treatment"
+Banana,Perennial,Annual,Throughout the year,Panama Disease,"Use diseas-ree banana plants, maintain field sanitation"
+Coconut,Perennial,Annual,Throughout the year,Bud Rot,"Use proper irrigation, remove infected palms"
+Lentils,Pulses/Legumes,Rabi,November-April,Wilt Disease,"Use diseas-esistant varieties, apply fungicide"
+Chickpeas,Pulses/Legumes,Rabi,November-April,Root Rot,"Crop rotation, use wel-rained soil"
+Soybeans,Pulses/Legumes,Kharif,June-September,Rust Disease,"Apply fungicide, plant resistant varieties"
+Peas,Pulses/Legumes,Rabi,November-April,Powdery Mildew,Apply sulfu-ased fungicides
+Apples,Fruits,Perennial,Yea-ound,Scab Disease,"Use resistant varieties, apply fungicide"
+Bananas,Fruits,Perennial,Yea-ound,Panama Disease,"Use resistant varieties, soil sterilization"
+Mangoes,Fruits,Summer,April-July,Anthracnose,Use coppe-ased fungicides
+Grapes,Fruits,Perennial,Yea-ound,Downy Mildew,Apply Bordeaux mixture
+Citrus Fruits,Fruits,Perennial,Yea-ound,Citrus Canker,Use coppe-ased sprays
+Tomatoes,Vegetables,Kharif & Rabi,"June-September, November-April",Early Blight,"Caused by *Alternaria solani*, leads to brown lesions with concentric rings on leaves and fruits."
+Tomatoes,Vegetables,Kharif & Rabi,"June-September, November-April",Late Blight,"Caused by *Phytophthora infestans*, causes dark, wate-oaked lesions."
+Tomatoes,Vegetables,Kharif & Rabi,"June-September, November-April",Tomato Yellow Leaf Curl Virus,"Leads to yellowing and curling of leaves, reducing fruit production."
+Tomatoes,Vegetables,Kharif & Rabi,"June-September, November-April",Bacterial Wilt,"Caused by *Ralstonia solanacearum*, results in sudden wilting of plants."
+Tomatoes,Vegetables,Kharif & Rabi,"June-September, November-April",Septoria Leaf Spot,"Caused by *Septoria lycopersici*, forms numerous small, dark spots on leaves."
+Tomatoes,Vegetables,Kharif & Rabi,"June-September, November-April",Tomato Mosaic Virus,Leads to mosai-ike patterns and deformed leaves.
+Tomatoes,Vegetables,Kharif & Rabi,"June-September, November-April",Fusarium Wilt,"Caused by *Fusarium oxysporum*, results in yellowing and wilting of leaves."
+Potato,Vegetables,Rabi,October-March,Late blight,"Apply fungicide, use resistant varieties"
+Carrots,Vegetables,Rabi,October-March,Root Knot Nematode,"Soil treatment, crop rotation"
+Onions,Vegetables,Rabi,October-March,Purple Blotch,"Use diseas-ree seeds, apply fungicide"
+Leafy Greens,Vegetables,Kharif & Rabi,Yea-ound,Damping Off,"Use wel-rained soil, fungicides"
+Sunflower,Oilseeds,Kharif,June-September,Rust Disease,"Use resistant varieties, apply fungicide"
+Soybean,Oilseeds,Kharif,June-September,Leaf Spot,Apply fungicide
+Rapeseed,Oilseeds,Rabi,October-March,White Rust,Use diseas-esistant varieties
+Groundnut,Oilseeds,Kharif,June-September,Tikka Disease,"Apply fungicide, proper spacing"
+Cassava,Root & Tuber Crops,Kharif,June-September,Cassava Mosaic Virus,Use resistant varieties
+Sweet Potato,Root & Tuber Crops,Kharif,June-September,Weevil Infestation,"Crop rotation, soil treatment"
+Yams,Root & Tuber Crops,Kharif,June-September,Anthracnose,Use fungicides
+Tea,Beverage Crops,Perennial,Yea-ound,Tea Mosquito Bug,Use botanical pesticides
+Coffee,Beverage Crops,Perennial,Yea-ound,Coffee Rust,"Use resistant varieties, fungicide"
+Cocoa,Beverage Crops,Perennial,Yea-ound,Black Pod Disease,Use coppe-ased fungicides
+Pepper,Spices & Herbs,Perennial,Yea-ound,Wilt Disease,Use diseas-ree planting material
+Turmeric,Spices & Herbs,Kharif,June-September,Rhizome Rot,"Soil sterilization, fungicide"
+Cardamom,Spices & Herbs,Perennial,Yea-ound,Cardamom Blight,Use coppe-ased sprays
+Cinnamon,Spices & Herbs,Perennial,Yea-ound,Leaf Spot,Use fungicides
+Cotton,Cash Crops,Kharif,June-September,Bollworm Infestation,"Use Bt cotton, pheromone traps"
+Jute,Cash Crops,Kharif,June-September,Stem Rot,"Use wel-rained soil, apply fungicide"
+Rubber,Cash Crops,Perennial,Yea-ound,Powdery Mildew,Use sulfu-ased sprays
+Tobacco,Cash Crops,Rabi,October-March,Tobacco Mosaic Virus,Use viru-ree seedlings
+Alfalfa,Forage Crops,Perennial,Yea-ound,Leaf Spot,Apply fungicide
+Clover,Forage Crops,Perennial,Yea-ound,Rust Disease,Use resistant varieties
+Fodder Maize,Forage Crops,Kharif,June-September,Stem Borer,Use biological control
+Mango,Fruit,Varies,Varies,Cutting Weevil,Apply insecticides like deltamethrin and fenvalerate; ensure regular monitoring.
+Mango,Fruit,Varies,Varies,Bacterial Canker,Spray streptocycline (200-300 ppm) twice at 20-day intervals; dip fruits in 200 ppm agrimycin.
+Mango,Fruit,Varies,Varies,Anthracnose,Use copper fungicides starting from flowering stage.
+Potato,Vegetable,Varies,Varies,Late Blight,Use fungicides like Acrobat + Bravo before disease onset; rotate crops.
+Potato,Vegetable,Varies,Varies,Healthy,"Ensure regular crop rotation, proper irrigation, and soil health monitoring."
+Potato,Vegetable,Varies,Varies,Early blight,Apply fungicides such as Luna Tranquility®; remove infected leaves.
+Tomato,Vegetable,Varies,Varies,Tomato Yellow Leaf Curl Virus,Monitor whiteflies and use neem-based sprays; rotate insecticides.
+Tomato,Vegetable,Varies,Varies,Tomato Mosaic Virus,Use pathogen-free seeds; remove infected plants promptly.
+Tomato,Vegetable,Varies,Varies,Target Spot,Apply fungicides every 10–14 days ensuring thorough coverage.
+Tomato,Vegetable,Varies,Varies,Spider Mites,"Use garlic, thyme, or peppermint oils; introduce predatory mites."
+Tomato,Vegetable,Varies,Varies,Septoria Leaf Spot,Remove diseased leaves; improve air circulation and apply fungicides.
+Tomato,Vegetable,Varies,Varies,Leaf Mold,Use fans; prune plants; avoid overhead watering.
+Tomato,Vegetable,Varies,Varies,Late Blight,Use Revus Top + Bravo or Presidio + Bravo post onset.
+Tomato,Vegetable,Varies,Varies,Healthy,"Maintain proper spacing, good soil, and timely watering."
+Tomato,Vegetable,Varies,Varies,Early Blight,Use pathogen-free seeds and apply suitable fungicides.
+Tomato,Vegetable,Varies,Varies,Bacterial Spot,Spray Actigard® alternated with copper + Mancozeb®.
+Strawberry,Fruit,Varies,Varies,Leaf Scorch,"Ensure air circulation, use drip irrigation, avoid overhead watering."
+Strawberry,Fruit,Varies,Varies,Healthy,"Maintain well-drained soil, apply mulch, monitor for pests."
+Squash,Vegetable,Varies,Varies,Powdery Mildew,Apply fungicides; space plants for air flow; avoid overhead watering.
+Soybean,Legume,Varies,Varies,Healthy,Practice crop rotation and maintain proper soil health.
+Raspberry,Fruit,Varies,Varies,Healthy,Prune regularly and control pests naturally.
+"Pepper, bell",Vegetable,Varies,Varies,Healthy,Apply balanced fertilizers; monitor for pests.
+"Pepper, bell",Vegetable,Varies,Varies,Bacterial Spot,Use copper bactericides; rotate crops.
+Peach,Fruit,Varies,Varies,Healthy,Prune dead wood and apply dormant sprays.
+Peach,Fruit,Varies,Varies,Bacterial Spot,Apply copper sprays; remove infected twigs.
+Orange,Fruit,Varies,Varies,Haunglongbing (Citrus greening),Remove infected trees; control psyllid vectors.
+Grape,Fruit,Varies,Varies,Leaf Blight (Isariopsis Leaf Spot),Apply fungicides; prune to increase ventilation.
+Grape,Fruit,Varies,Varies,Healthy,Train vines properly; apply preventive fungicides.
+Grape,Fruit,Varies,Varies,Esca (Black Measles),Prune infected wood; avoid vine stress.
+Grape,Fruit,Varies,Varies,Black Rot,Remove infected fruit; apply fungicides.
+Corn (maize),Cereal,Varies,Varies,Northern Leaf Blight,Plant resistant hybrids; apply fungicides.
+Corn (maize),Cereal,Varies,Varies,Healthy,Follow IPM practices; rotate crops.
+Corn (maize),Cereal,Varies,Varies,Common Rust,Use resistant varieties and apply fungicides.
+Corn (maize),Cereal,Varies,Varies,Cercospora Leaf Spot (Gray Leaf Spot),Rotate crops; plant resistant hybrids.
+Cherry (including sour),Fruit,Varies,Varies,Powdery Mildew,Apply sulfur fungicides; prune to open canopy.
+Cherry (including sour),Fruit,Varies,Varies,Healthy,"Maintain pruning, spacing, and pest control."
+Blueberry,Fruit,Varies,Varies,Healthy,Mulch roots; avoid wet soil; prune regularly.
+Apple,Fruit,Varies,Varies,Healthy,Apply preventive fungicides and insect traps.
+Apple,Fruit,Varies,Varies,Cedar Apple Rust,Remove junipers nearby; apply fungicides.
+Apple,Fruit,Varies,Varies,Black Rot,Prune infected branches; apply fungicides.
+Apple,Fruit,Varies,Varies,Apple Scab,Use resistant cultivars; apply sulfur fungicides.
+Banana,Fruit,Varies,Varies,Sigatoka,Apply mancozeb or propiconazole fungicides.
+Mango,Fruit,Varies,Varies,Sooty Mould,Spray potassium soap; control sap-sucking insects.
+Banana,Fruit,Varies,Varies,Pestalotiopsis,Use fungicides and ensure proper drainage.
+Banana,Fruit,Varies,Varies,Healthy,Monitor for pests; maintain good drainage.
+Banana,Fruit,Varies,Varies,Cordana,Use fungicides like carbendazim and maintain sanitation.
+Mango,Fruit,Varies,Varies,Powdery Mildew,Apply sulfur-based fungicides early in season.
+Mango,Fruit,Varies,Varies,Gall Midge,Collect and destroy infested leaves; apply insecticides.
+Mango,Fruit,Varies,Varies,Die Back,Prune dead twigs; spray copper oxychloride.

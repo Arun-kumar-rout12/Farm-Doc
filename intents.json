@@ -1,0 +1,54 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": ["Hii", "Hello", "Hey", "Greetings", "Good morning", "Good afternoon", "Good evening", "Is anyone there?", "What's up?", "How's it going?"],
+      "responses": ["Hello! I'm Farm Doc, your agricultural assistant. How can I help you today?", "Greetings! Ready to tackle your farming challenges. What can I assist you with?", "Hi there! I'm here to provide expert advice on crops and livestock. What's on your mind?", "Welcome! How can I make your farming experience smoother today?"],
+      "context_set": ""
+    },
+    {
+      "tag": "answer",
+      "patterns": ["Yes", "Okay", "Ok", "No", "Sure", "Absolutely", "Definitely", "Maybe", "Not sure"],
+      "responses": ["Understood. How may I further assist you?", "Alright, what's your next question?", "Feel free to ask if you need more information.", "Got it. Is there anything else I can help with?", "Okay, moving on. How can I help next?"],
+      "context_set": ""
+    },
+    {
+      "tag": "goodbye",
+      "patterns": ["Bye", "See you later", "Goodbye", "Take care", "Farewell", "See you soon"],
+      "responses": ["Goodbye! Take care and have a productive day.", "See you soon! Feel free to reach out anytime.", "Have a great day! Don't hesitate to ask if you need more help.", "Farewell! Stay safe and keep farming!"],
+      "context_set": ""
+    },
+    {
+      "tag": "thanks",
+      "patterns": ["Thanks", "Thank you", "That's helpful", "Appreciate it", "Much appreciated", "Thank you so much"],
+      "responses": ["You're welcome! I'm glad I could assist.", "Happy to help! Feel free to ask more questions.", "Anytime! Let me know if you need further assistance.", "You're most welcome! It's my pleasure to help."],
+      "context_set": ""
+    },
+    {
+      "tag": "problem_initial",
+      "patterns": ["I have a problem", "Something is wrong with my farm", "Help me with my farm issue", "I need assistance", "I'm facing a challenge", "I need advice"],
+      "responses": ["I understand you're facing a challenge. Is your issue related to crops, livestock, or something else?", "Tell me about your problem. Is it with crops, livestock, or farm management?", "Let's work on this together. Is your issue with crops, livestock, or other farm-related matters?"],
+      "context_set": "problem_initial"
+    },
+
+    {
+          "tag": "problem_crop",
+          "patterns": ["It is a problem with crops", "My plants are affected", "I need help with my crops", "Crops are showing symptoms", "My crop yield is low"],
+          "responses": ["Which specific crop are you experiencing problems with? Please provide the crop name so I can assist you better.", "What type of crop is affected? Knowing this will help me understand the issue.", "Please tell me the name of the crop you're having trouble with."],
+          "context_set": "crop_type"
+        },
+        {
+          "tag": "problem_livestock",
+          "patterns": ["It is a problem with livestock", "My animals are sick", "I need help with my livestock", "Livestock are showing symptoms", "My animals are not producing"],
+          "responses": ["What type of livestock are you having issues with? Please specify the animal type.", "Which specific livestock are you concerned about? Knowing this will help me provide relevant information.", "Could you please tell me what kind of animal is affected?"],
+          "context_set": "livestock_type"
+        },
+        {
+          "tag": "livestock_type",
+          "patterns": ["Cattle", "Sheep", "Goats", "Pigs", "Chickens", "Ducks", "Horses", "Donkeys", "Rabbits"],
+          "responses": ["Please describe the symptoms you're observing. Are there any changes in behavior, appetite, or physical appearance?", "What specific issues are you seeing with your [livestock_type]? Knowing the detailed symptoms will help me diagnose the problem.", "Let's get to the bottom of this. Describe the symptoms, including any changes in behavior, appetite, or physical appearance."],
+          "context_set": "livestock_symptoms"
+        }
+      ]
+    }
+  
